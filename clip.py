@@ -405,6 +405,12 @@ def extend_clips(chosen, energy, total):
                 e = min(cap, s + TARGET_CLIP)
         c["start"], c["end"] = round(s, 2), round(e, 2)
         prev_end = c["end"]
+
+    # a stub at the end of the recording is not worth a clip: fold it into the one before
+    if len(chosen) > 1 and chosen[-1]["end"] - chosen[-1]["start"] < TARGET_CLIP:
+        if chosen[-1]["end"] - chosen[-2]["start"] <= MAX_CLIP:
+            chosen[-2]["end"] = chosen[-1]["end"]
+            chosen.pop()
     return chosen
 
 
@@ -981,6 +987,11 @@ def selftest():
     joined = extend_clips(join, beat2, 80.0)
     assert joined[0]["end"] > 26.0, "cut moved past the fight"
     assert joined[1]["start"] == joined[0]["end"], "next clip starts at the new cut"
+
+    stub = [{"start": 10.0, "end": 40.0, "text": "a"},
+            {"start": 40.0, "end": 50.0, "text": "b"}]
+    merged = extend_clips(stub, [0.2] * 80, 50.0)
+    assert len(merged) == 1 and merged[0]["end"] == 50.0, "short tail folded in"
     print("selftest ok")
 
 

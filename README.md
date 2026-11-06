@@ -15,7 +15,18 @@ same recording skips Whisper.
 
 From the Capture Panel: option **11** launches this and opens the browser.
 
-Requires `ffmpeg` + `ffprobe` on PATH and `faster-whisper` installed (both already are on this machine).
+### Requirements (fresh machine)
+
+- Python 3.10+
+- `ffmpeg` + `ffprobe` on PATH (`winget install Gyan.FFmpeg`)
+- Python packages:
+
+```
+pip install -r requirements.txt
+```
+
+First run downloads the Whisper model to the Hugging Face cache (`small` ≈ 500 MB); needs
+internet once. A CUDA GPU is used when it works, otherwise it falls back to CPU — slower but fine.
 
 ## What it does
 
