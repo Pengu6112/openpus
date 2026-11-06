@@ -1,0 +1,21 @@
+# generated media + transcripts (large, private)
+jobs/
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# local env / secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# editors / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
